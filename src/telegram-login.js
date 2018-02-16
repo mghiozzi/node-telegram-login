@@ -22,17 +22,20 @@ module.exports = class TelegramLogin {
     }
   }
 
-  defaultMiddleware(req, res, next){
-    if (req.query.hash && req.query.id){
-      res.locals.telegram_user = this.checkLoginData(req.query);
+  defaultMiddleware(){
+    let that = this;
+    return (req,res,next) => {
+      let data = req.query;
+      res.locals.telegram_user = that.checkLoginData(req.query);
+      next();
     }
-    next();
   }
 
   customMiddleware(success, fail){
+    let that = this;
     return (req, res, next) => {
-      let login_data = this.checkLoginData(req.query)
-      if (req.query.hash && req.query.id && login_data){
+      let login_data = that.checkLoginData(req.query)
+      if (login_data){
         success(req,res,next,login_data);
       } else {
         fail(req,res,next);

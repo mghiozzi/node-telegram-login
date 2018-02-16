@@ -26,7 +26,7 @@ const TOKEN = '<BOT_TOKEN>'
 const TelegramLogin = require('node-telegram-login');
 const MySiteLogin = new TelegramLogin(TOKEN);
 
-app.get('/login', MySiteLogin.defaultMiddleware, (req, res) => {
+app.get('/login', MySiteLogin.defaultMiddleware(), (req, res) => {
   console.log(res.locals.telegram_user) //null if not from telegram, contains login data otherwise;
 });
 
