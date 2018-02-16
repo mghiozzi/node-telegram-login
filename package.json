@@ -1,0 +1,26 @@
+{
+  "name": "node-telegram-login",
+  "version": "1.0.0",
+  "description": "Check Telegram login widget hash + express.js middleware",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcelloGhiozzi/node-telegram-login.git"
+  },
+  "keywords": [
+    "Telegram",
+    "Login",
+    "Node",
+    "Express",
+    "Middleware"
+  ],
+  "author": "Marcello Ghiozzi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarcelloGhiozzi/node-telegram-login/issues"
+  },
+  "homepage": "https://github.com/MarcelloGhiozzi/node-telegram-login#readme"
+}
