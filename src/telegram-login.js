@@ -1,4 +1,23 @@
 const crypto = require('crypto');
+
+function checkLogin(data, secret){
+  data = JSON.parse(JSON.stringify(data));
+  let input_hash = data.hash;
+  delete data.hash;
+  let array = [];
+  for (let key in data){
+    array.push(key+'='+data[key]);
+  }
+  array = array.sort();
+  let check_string = array.join('\n');
+  let check_hash = crypto.createHmac('sha256', secret).update(check_string).digest('hex');
+  if (check_hash == input_hash){
+    return data;
+  } else {
+    return false;
+  }
+}
+
 module.exports = class TelegramLogin {
   constructor(token){
     this.token = token;
@@ -6,35 +25,19 @@ module.exports = class TelegramLogin {
   }
 
   checkLoginData(data){
-    let input_hash = data.hash;
-    delete data.hash;
-    let array = [];
-    for (let key in data){
-      array.push(key+'='+data[key]);
-    }
-    array = array.sort();
-    let check_string = array.join('\n');
-    let check_hash = crypto.createHmac('sha256', this.secret).update(check_string).digest('hex');
-    if (check_hash == input_hash){
-      return data;
-    } else {
-      return false;
-    }
+    return checkLogin(data, this.secret)
   }
 
   defaultMiddleware(){
-    let that = this;
     return (req,res,next) => {
-      let data = req.query;
-      res.locals.telegram_user = that.checkLoginData(req.query);
+      res.locals.telegram_user = checkLogin(req.query, this.secret);
       next();
     }
   }
 
   customMiddleware(success, fail){
-    let that = this;
     return (req, res, next) => {
-      let login_data = that.checkLoginData(req.query)
+      let login_data = checkLogin(req.query, this.secret)
       if (login_data){
         success(req,res,next,login_data);
       } else {
