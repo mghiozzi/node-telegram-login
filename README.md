@@ -7,16 +7,18 @@
 [![GitHub stars](https://img.shields.io/github/stars/MarcelloGhiozzi/node-telegram-login.svg)](https://github.com/MarcelloGhiozzi/node-telegram-login/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/MarcelloGhiozzi/node-telegram-login/master/LICENSE)
 
-Check Telegram login widget hash + express.js middleware
+Check Telegram Login Widget hash manually or with an express.js middleware
 
 ## Installation
 
 Install through npm:
 ```
-npm install --save https://github.com/MarcelloGhiozzi/node-telegram-login.git
+npm install --save node-telegram-login
 ```
 
-Then use it in your app like so:
+## Usage
+
+Use it in your app like so:
 
 ```javascript
 const TOKEN = '<BOT_TOKEN>'
@@ -27,7 +29,7 @@ if(MySiteLogin.checkLoginData(data)) console.log('Data is from telegram! ;)');
 if(!MySiteLogin.checkLoginData(data)) console.log('Data is NOT from telegram :(')
 ```
 
-You can use it like an express middleware like this:
+You can use it like an express.js middleware like this:
 
 ```javascript
 const TOKEN = '<BOT_TOKEN>'
@@ -40,7 +42,10 @@ app.get('/login', MySiteLogin.defaultMiddleware(), (req, res) => {
 
 ```
 
-Also it is possible to set a custom middleware with specified success and fail functions
+Also it is possible to set a custom middleware with specified success and fail functions.
+Success function will be called with req, res, next and the login_data.
+Fail function will be called with req, res, next arguments.
+In this case you are responsable of calling next()
 
 ```javascript
 const TOKEN = '<BOT_TOKEN>'
@@ -56,7 +61,7 @@ let fail = (req,res,next) => {
   res.sendStatus(403);
 }
 
-app.get('/login', MySiteLogin.customMiddleware(succes, fail), (req, res) => {
+app.get('/login', MySiteLogin.customMiddleware(success, fail), (req, res) => {
   //do your stuff;
 });
 
