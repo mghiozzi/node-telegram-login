@@ -7,7 +7,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/MarcelloGhiozzi/node-telegram-login.svg)](https://github.com/MarcelloGhiozzi/node-telegram-login/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/MarcelloGhiozzi/node-telegram-login/master/LICENSE)
 
-Check Telegram Login Widget hash manually or with an express.js middleware
+Check [Telegram Login Widget](https://core.telegram.org/widgets/login) hash manually or with an express.js middleware
 
 ## Installation
 
