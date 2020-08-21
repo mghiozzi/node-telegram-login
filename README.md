@@ -13,56 +13,31 @@ Check [Telegram Login Widget](https://core.telegram.org/widgets/login) hash manu
 
 Install through npm:
 ```
-npm install --save node-telegram-login
+npm install node-telegram-login
 ```
 
-## Usage
+## Example
 
-Use it in your app like so:
 
-```javascript
-const TOKEN = '<BOT_TOKEN>'
-const TelegramLogin = require('node-telegram-login');
-const MySiteLogin = new TelegramLogin(TOKEN);
+```typescript
+import { TelegramLogin } from 'node-telegram-login'
+const TelegramAuth = new TelegramLogin('<BOT_TOKEN>');
 
-if(MySiteLogin.checkLoginData(data)) console.log('Data is from telegram! ;)');
-if(!MySiteLogin.checkLoginData(data)) console.log('Data is NOT from telegram :(')
+const verify = (data: TelegramLoginPayload) => 
+  console.log(
+    TelegramAuth.checkLoginData(data) ?
+    'Payload is secure! We\'re safe!',
+    'Uhm. Payload is not secure'
+  );
 ```
 
 You can use it like an express.js middleware like this:
 
-```javascript
-const TOKEN = '<BOT_TOKEN>'
-const TelegramLogin = require('node-telegram-login');
-const MySiteLogin = new TelegramLogin(TOKEN);
+```typescript
+port { TelegramLogin } from 'node-telegram-login'
+const TelegramAuth = new TelegramLogin('<BOT_TOKEN>');
 
-app.get('/login', MySiteLogin.defaultMiddleware(), (req, res) => {
-  console.log(res.locals.telegram_user) //null if not from telegram, contains login data otherwise;
+app.get('/login/telegram', TelegramAuth.defaultMiddleware(), (req, res) => {
+  console.log(res.locals.telegram_user)
 });
 
-```
-
-Also it is possible to set a custom middleware with specified success and fail functions.
-Success function will be called with req, res, next and the login_data.
-Fail function will be called with req, res, next arguments.
-In this case you are responsable of calling next()
-
-```javascript
-const TOKEN = '<BOT_TOKEN>'
-const TelegramLogin = require('node-telegram-login');
-const MySiteLogin = new TelegramLogin(TOKEN);
-
-let success = (req,res,next,login_data) => {
-  res.locals.telegram_user = login_data;
-  next();
-}
-
-let fail = (req,res,next) => {
-  res.sendStatus(403);
-}
-
-app.get('/login', MySiteLogin.customMiddleware(success, fail), (req, res) => {
-  //do your stuff;
-});
-
-```
