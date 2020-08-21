@@ -31,7 +31,7 @@ const verify = (data: TelegramLoginPayload) =>
 Or as an express.js middleware like this:
 
 ```typescript
-port { TelegramLogin } from 'node-telegram-login'
+import { TelegramLogin } from 'node-telegram-login'
 const TelegramAuth = new TelegramLogin('<BOT_TOKEN>');
 
 app.get('/login/telegram', TelegramAuth.defaultMiddleware(), (req, res) => {
