@@ -1,12 +1,13 @@
 {
   "name": "node-telegram-login",
-  "version": "1.0.0",
-  "description": "Check Telegram login widget hash + express.js middleware",
-  "main": "src/index.js",
+  "version": "2.0.0",
+  "description": "Verify Telegram Login hash signature",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "prepublish": "tsc",
   "scripts": {
-    "test": "npm run test-unit",
-    "test-unit": "NODE_ENV=test mocha --require co-mocha 'tests/*.spec.js'",
-    "istanbul": "istanbul cover _mocha $(find ./tests -name \"*.spec.js\" -not -path \"./node_modules/*\")"
+    "build": "tsc",
+    "test": "mocha --require co-mocha 'tests/*.spec.js'"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,15 @@
   },
   "homepage": "https://github.com/MarcelloGhiozzi/node-telegram-login#readme",
   "devDependencies": {
+    "@types/node": "^14.6.0",
+    "@types/express": "^4.17.7",
     "chai": "^4.1.2",
     "chai-spies": "^1.0.0",
-    "co-mocha": "^1.2.1",
-    "sinon": "^4.3.0"
+    "co-mocha": "^1.2.2",
+    "mocha": "^8.1.1",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1"
   }
 }

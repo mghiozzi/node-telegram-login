@@ -1,9 +1,10 @@
 const chai = require('chai');
 const spies = require('chai-spies');
 chai.use(spies);
-const expect = chai.expect
-const sinon = require('sinon');
-const TelegramLogin = require('../src')
+const expect = chai.expect;
+
+
+const TelegramLogin = require('../dist/index').TelegramLogin;
 const TOKEN = 'THISISJUSTATEST';
 const myLogin = new TelegramLogin(TOKEN)
 
@@ -30,6 +31,7 @@ const valid_data = {
   first_name: 'HappyBoi',
   photo_url: 'https://t.me/i/userpic/392/HappyBoi.jpg',
   username: 'HappyBoi',
+  hash: '4e701ce359ca4395b7d9fc67a1dba0c46bb6fa76f0cbf4097c22fe6c0e42ad59',
 }
 
 describe('checkLoginData', function () {
