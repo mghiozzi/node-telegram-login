@@ -9,15 +9,12 @@
 
 Check [Telegram Login Widget](https://core.telegram.org/widgets/login) hash manually or with an express.js middleware
 
-## Installation
 
-Install through npm:
 ```
 npm install node-telegram-login
 ```
 
-## Example
-
+Simply use the check method
 
 ```typescript
 import { TelegramLogin } from 'node-telegram-login'
@@ -26,12 +23,12 @@ const TelegramAuth = new TelegramLogin('<BOT_TOKEN>');
 const verify = (data: TelegramLoginPayload) => 
   console.log(
     TelegramAuth.checkLoginData(data) ?
-    'Payload is secure! We\'re safe!',
+    `Payload is safe! We can trust ${data.first_name}`,
     'Uhm. Payload is not secure'
   );
 ```
 
-You can use it like an express.js middleware like this:
+Or as an express.js middleware like this:
 
 ```typescript
 port { TelegramLogin } from 'node-telegram-login'
