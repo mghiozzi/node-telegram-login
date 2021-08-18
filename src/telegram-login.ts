@@ -1,17 +1,16 @@
 import * as crypto from 'crypto';
 import { Request, Response, NextFunction} from 'express';
 
-function verifyTelegramPayload(payload: TelegramLoginPayload, secret: Buffer)  {
-  const hash = payload.hash;
-  delete payload.hash;
+function verifyTelegramPayload(telegramPayload: TelegramLoginPayload, secret: Buffer): false | TelegramLoginPayload {
+  const { hash, ...payload } = telegramPayload
   const check = crypto.createHmac('sha256', secret).update(
     Object
-    .keys(payload)
-    .map((key: keyof TelegramLoginPayload) => `${key}=${payload[key]}`)
-    .sort()
-    .join('\n')
+      .keys(payload)
+      .map((key: keyof TelegramLoginPayload) => `${key}=${payload[key]}`)
+      .sort()
+      .join('\n')
   ).digest('hex');
-  return hash === check ? Object.assign(payload, {hash}) : false;
+  return hash === check ? telegramPayload : false;
 }
 
 export interface TelegramLoginPayload {
