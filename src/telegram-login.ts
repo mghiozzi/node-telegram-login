@@ -7,6 +7,7 @@ function verifyTelegramPayload(payload: TelegramLoginPayload, secret: Buffer)  {
   const check = crypto.createHmac('sha256', secret).update(
     Object
     .keys(payload)
+    .filter(key => payload[key])
     .map((key: keyof TelegramLoginPayload) => `${key}=${payload[key]}`)
     .sort()
     .join('\n')
